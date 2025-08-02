@@ -8,7 +8,10 @@ $result = mysqli_query($connection, "SELECT * FROM asset"); //akan jadi asset
 <section class="section">
   <div class="section-header d-flex justify-content-between">
     <h1>List Asset</h1>
-    <a href="./create.php" class="btn btn-primary">Tambah Data</a>
+    <div class="d-grid gap-3">
+      <a href="./create.php" class="btn btn-primary">Tambah Data</a>
+      <a href="./print.php" class="btn btn-secondary">Print</a>
+    </div>
   </div>
   <div class="row">
     <div class="col-12">
