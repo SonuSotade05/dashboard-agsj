@@ -4,9 +4,18 @@ require_once '../helper/connection.php';
 
 $no_asset = $_GET['no_asset'];
 
+// Ambil data sebelum dihapus
+$old = mysqli_query($connection, "SELECT * FROM asset WHERE no_asset = '$no_asset'");
+$data_before = json_encode(mysqli_fetch_assoc($old));
+
+// Hapus asset
 $result = mysqli_query($connection, "DELETE FROM asset WHERE no_asset='$no_asset'");
 
 if (mysqli_affected_rows($connection) > 0) {
+  // AUDIT LOG
+  $username = $_SESSION['login'];
+  mysqli_query($connection, "INSERT INTO audit_log (no_asset, action, data_before, username) VALUES ('$no_asset', 'delete', '$data_before', '$username')");
+
   $_SESSION['info'] = [
     'status' => 'success',
     'message' => 'Berhasil menghapus data'
