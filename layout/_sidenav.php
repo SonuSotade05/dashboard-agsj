@@ -27,6 +27,9 @@
           <li><a class="nav-link" href="../todolist/create.php">Tambah Data</a></li>
         </ul>
       </li>
+      <li class="dropdown">
+        <a href="../auditlog/index.php" class="nav-link"><i class="fas fa-flag"></i> <span>Audit Log</span></a>
+      </li>
     </ul>
   </aside>
 </div>
