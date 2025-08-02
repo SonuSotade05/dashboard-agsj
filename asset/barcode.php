@@ -1,13 +1,80 @@
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-<!-- Modal QR -->
-<div id="qrModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
-  <div style="background:#fff; padding:20px; border-radius:8px; text-align:center;">
-    <h3>QR Code Asset</h3>
-    <div id="qrcode"></div>
-    <br>
-    <button onclick="closeQRModal()">Tutup</button>
+<?php
+require_once '../helper/connection.php';
+
+$no_asset = isset($_GET['no_asset']) ? $_GET['no_asset'] : '';
+
+if ($no_asset) {
+  $stmt = $connection->prepare("SELECT * FROM asset WHERE no_asset = ?");
+  $stmt->bind_param("s", $no_asset);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $asset = $result->fetch_assoc();
+} else {
+  $asset = null;
+}
+?>
+
+<?php require('../layout/_public_header.php') ?>
+
+<section class="section">
+  <div class="container">
+    <h2 class="pb-3">Detail Asset</h2>
+
+    <?php if ($asset): ?>
+      <div class="container my-4">
+        <div class="row g-4 align-items-start">
+          <!-- QR Code Section -->
+          <div class="col-md-auto text-center">
+            <div id="qrcode"></div>
+          </div>
+
+          <!-- Asset Detail Table -->
+          <div class="col-md">
+            <div class="table-responsive">
+              <table class="table table-white table-bordered border-light-subtle">
+                <tbody>
+                  <tr>
+                    <th>No Asset</th>
+                    <td><?= htmlspecialchars($asset['no_asset']) ?></td>
+                  </tr>
+                  <tr>
+                    <th>User</th>
+                    <td><?= htmlspecialchars($asset['user']) ?></td>
+                  </tr>
+                  <tr>
+                    <th>Department</th>
+                    <td><?= htmlspecialchars($asset['department']) ?></td>
+                  </tr>
+                  <tr>
+                    <th>Keterangan</th>
+                    <td><?= htmlspecialchars($asset['keterangan']) ?></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <?php else: ?>
+      <div class="alert alert-warning">
+        Data asset tidak ditemukan atau parameter `no_asset` tidak dikirim.
+      </div>
+    <?php endif; ?>
   </div>
-</div>
-<button onclick="showQR('<?= $row['no_asset'] ?>', '<?= $row['user'] ?>', '<?= $row['department'] ?>', '<?= $row['keterangan'] ?>')" class="btn btn-dark btn-sm">
-  <i class="fas fa-barcode"></i>
-</button>
+</section>
+
+<!-- Include QRCode.js -->
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script>
+  <?php if ($asset): ?>
+    // Generate QR Code isi dengan no_asset atau URL
+    new QRCode(document.getElementById("qrcode"), {
+      text: "<?= 'https://10aa2948c0f6.ngrok-free.app/asset/barcode.php?no_asset=' . urlencode($asset['no_asset']) ?>",
+      width: 200,
+      height: 200
+    });
+  <?php endif; ?>
+</script>
+
+<?php require('../layout/_bottom.php') ?>
