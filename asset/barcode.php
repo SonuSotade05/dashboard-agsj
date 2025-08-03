@@ -1,5 +1,9 @@
 <?php
 require_once '../helper/connection.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
 
 $no_asset = isset($_GET['no_asset']) ? $_GET['no_asset'] : '';
 
@@ -70,7 +74,7 @@ if ($no_asset) {
   <?php if ($asset): ?>
     // Generate QR Code isi dengan no_asset atau URL
     new QRCode(document.getElementById("qrcode"), {
-      text: "<?= 'https://10aa2948c0f6.ngrok-free.app/asset/barcode.php?no_asset=' . urlencode($asset['no_asset']) ?>",
+      text: "<?= $_ENV['APPURL'] . '/asset/barcode.php?no_asset=' . urlencode($asset['no_asset']) ?>",
       width: 200,
       height: 200
     });
