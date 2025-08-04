@@ -183,7 +183,7 @@ while ($row = mysqli_fetch_assoc($assets)) {
         <div class="label-box">
           <div class="qr-section">
             <div class="qr-container" id="<?= $qrId ?>"></div>
-            <div class="asset-code">AGSJ/<?= htmlspecialchars($no_asset) ?></div>
+            <div class="asset-code">AGSJ/<?= htmlspecialchars($department) ?>/<?= htmlspecialchars($no_asset) ?></div>
           </div>
           <div class="info-section">
             <div class="logo-container">

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../helper/connection.php';
+$username = isset($_SESSION['login']['username']) ? $_SESSION['login']['username'] : 'unknown';
 
 $no_asset = $_POST['no_asset'];
 $user = $_POST['user'];
@@ -22,7 +23,7 @@ if ($query) {
     'keterangan' => $keterangan
   ]);
 
-  $username = $_SESSION['login'];
+  // $username = $_SESSION['login'];
   mysqli_query($connection, "INSERT INTO audit_log (no_asset, action, data_before, data_after, username) VALUES ('$no_asset', 'update', '$data_before', '$data_after', '$username')");
 
   $_SESSION['info'] = [

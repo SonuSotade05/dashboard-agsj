@@ -39,8 +39,11 @@ $result = mysqli_query($connection, "SELECT * FROM asset"); //akan jadi asset
                     <td><?= $data['department'] ?></td>
                     <td><?= $data['keterangan'] ?></td>
                     <td>
-                      <a class="btn btn-sm btn-danger mb-md-0 mb-1" href="delete.php?no_asset=<?= $data['no_asset'] ?>">
+                      <!-- <a class="btn btn-sm btn-danger mb-md-0 mb-1" href="delete.php?no_asset=<?= $data['no_asset'] ?>">
                         <i class="fas fa-trash fa-fw"></i>
+                      </a> -->
+                      <a class="btn btn-sm btn-danger mb-md-0 mb-1" href="delete.php?no_asset=<?= $data['no_asset'] ?>" onclick="return confirm('Yakin ingin menghapus data ini?')">
+                      <i class="fas fa-trash fa-fw"></i>
                       </a>
                       <a class="btn btn-sm btn-info" href="edit.php?no_asset=<?= $data['no_asset'] ?>">
                         <i class="fas fa-edit fa-fw"></i>
