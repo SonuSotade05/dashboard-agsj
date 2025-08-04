@@ -54,7 +54,14 @@ $result = mysqli_query($connection, "SELECT al.*, a.keterangan AS asset_name FRO
                               <div class="row">
                                 <div class="col-md-6">
                                   <h6>Data Sebelum:</h6>
-                                  <pre><?= $log['data_before'] ? json_encode(json_decode($log['data_before']), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) : '-' ?></pre>
+                                  <pre>
+                                  <?php 
+                                    var_dump($log['data_before']); 
+                                    echo "\n\n";
+                                    echo $log['data_before'] ? json_encode(json_decode($log['data_before']), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) : '-'; 
+                                  ?>
+                                  </pre>
+                                  <!-- <pre><?= $log['data_before'] ? json_encode(json_decode($log['data_before']), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) : '-' ?></pre> -->
                                 </div>
                                 <div class="col-md-6">
                                   <h6>Data Sesudah:</h6>
